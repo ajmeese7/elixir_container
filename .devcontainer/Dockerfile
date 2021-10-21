@@ -19,7 +19,6 @@ ARG PHOENIX_VERSION="1.6.2"
 
 ARG NODE_SCRIPT_SOURCE="https://raw.githubusercontent.com/microsoft/vscode-dev-containers/main/script-library/node-debian.sh"
 ARG NODE_SCRIPT_SHA="dev-mode"
-ARG NODE_VERSION="none"
 ENV NVM_DIR=/usr/local/share/nvm
 ENV NVM_SYMLINK_CURRENT=true
 ENV PATH=${NVM_DIR}/current/bin:${PATH}
@@ -50,14 +49,14 @@ RUN apt-get update \
   && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/* /tmp/common-setup.sh /tmp/node-setup.sh
 
-RUN su ${USERNAME} -c "mix local.hex --force \
+RUN su root -c "mix local.hex --force \
   && mix local.rebar --force \
   && mix archive.install --force hex phx_new ${PHOENIX_VERSION}"
 
 # [Optional] Uncomment this section to install additional OS packages.
-# RUN apt-get update \
-#     && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends <your-package-list-here>
+RUN apt-get update \
+  && export DEBIAN_FRONTEND=noninteractive \
+  && apt-get -y install --no-install-recommends inotify-tools
 
 # [Optional] Uncomment this line to install additional package.
-# RUN  mix ...
+# RUN mix ...
