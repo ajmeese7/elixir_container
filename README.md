@@ -11,3 +11,9 @@ container when migrating from a Windows machine, add the following to
 *.{cmd,[cC][mM][dD]} text eol=crlf
 *.{bat,[bB][aA][tT]} text eol=crlf
 ```
+
+If you encounter any EACCES errors, run the following from the root folder of your project:
+
+```
+chmod -R a+rwx .
+```
